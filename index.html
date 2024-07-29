@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Electric Vehicle Population Visualization in Washington State</title>
+  <script src="javascript/d3.min.js"></script>
+  <script src="javascript/d3-annotation.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson@3.0.2/dist/topojson.min.js"></script>
+  <script type="module" src="javascript/index.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1200px;
+      padding: 20px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+
+    .col {
+      flex: 1;
+      min-width: 300px;
+      padding: 10px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: space-around;
+      cursor: pointer;
+    }
+
+    .nav-tabs div {
+      padding: 10px 20px;
+      background-color: #f0f0f0;
+      margin: 0 5px;
+      border-radius: 5px;
+    }
+
+    .nav-tabs .active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .tooltip {
+      opacity: 0;
+      background-color: black;
+      color: white;
+      padding: 10px;
+      position: absolute;
+      border-radius: 5px;
+    }
+
+    .legend {
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .controls label {
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Exploring the Electric Vehicle Population in Washington State</h2>
+    <p>
+      This data visualization project aims to analyze key factors related to the electric vehicle population using the provided dataset.
+    </p>
+    <p>
+      This dataset shows the Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) that are currently registered through Washington State Department of Licensing (DOL). The chart below visualizes the distribution of these vehicle types. <br/>
+      <br/>Dataset source: <a href="https://catalog.data.gov/dataset/electric-vehicle-population-data" target="_blank">Electric Vehicle Population Data</a>
+    </p>
+    <div class="nav-tabs">
+      <div id="tab-intro" class="active">Introduction</div>
+      <div id="tab-geographic">Geographic Distribution</div>
+      <div id="tab-specifications">Vehicle Specifications</div>
+      <div id="tab-cafv">CAFV Eligibility</div>
+    </div>
+    <div class="tab-content active" id="content-intro">
+      <div class="row">
+        <div class="col">
+          <h4>Distribution of Electric Vehicle Types (BEV, PHEV) in the State of Washington</h4>
+          <div id="chart-intro1"></div>
+          <div class="controls">
+            <label for="countySelect">Select County (Limited to Top-5 Counties in terms of EV Count):</label>
+            <select id="countySelect">
+              <option value="all">Overall</option>
+            </select>
+          </div>
+          <div id="legend"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="content-geographic">
+      <div class="row">
+        <div class="col">
+          <h4>EV Distribution by County</h4>
+          <p>The county map shows that more EV cars tend to be more populous, urban areas of the state (closer to the west coast), which makes sense.</p>
+          <div id="chart-geo1"></div>
+        </div>
+        <div class="col">
+          <h4>EV Distribution by City (Top 10 Cities)</h4>
+          <div id="chart-geo2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="content-specifications">
+      <p>
+        The two charts below show the distribution of electric vehicle specifications. These two plots have helped us identify issues with the dataset. For example, the right bar chart shows Tesla cars having less battery range than Nissan and sit around 73 miles of Battery Range. This is not true, and as the next tab shows, this is due to an issue in the dataset where many Teslas are assigned a battery range of 0 due to them being classified as "unresearched". This is a problem with the dataset that needs to be addressed.
+      </p>
+      <div class="row">
+        <div class="col">
+          <h4>Electric Range by Car Maker: Top 15 Car Makers by Count</h4>
+          <div id="chart-spec1"></div>
+        </div>
+        <div class="col">
+          <h4>Electric Range by Car Maker: Top 15 Car Makers by Electric Range</h4>
+          <div id="chart-spec2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-content" id="content-cafv">
+      <p>
+        The Clean Alternative Fuel Vehicle (CAFV) program is a Washington State program that provides tax incentives for the purchase of new vehicles that run on alternative fuels. The program is designed to encourage the use of cleaner transportation options and reduce greenhouse gas emissions. The charts below show the distribution of CAFV-eligible vehicles based on electric range and model year.
+      </p>
+      <div class="row">
+        <div class="col">
+          <h4>CAFV Eligibility by Bucketized Battery Electric Range</h4>
+          <div id="chart-cafv1"></div>
+        </div>
+        <div class="col">
+          <h4>CAFV Eligibility by Car Model Year</h4>
+          <div id="chart-cafv2"></div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <h4>Top Unresearched Car Makers in the dataset</h4>
+            <p>These car makers have the highest number of vehicles in the dataset with that lack research, and thus were assigned the value 0 as a battery range. This chart shows that many of the unresearched cars are Teslas and other makers, which means the conclusions from the previous two charts should be taken with a grain of salt, since it indicates that many long-range cars in the dataset were assigned a value of 0!</p>
+            <div id="chart-cafv3"></div>
+          </div>
+          <div class="col">
+            <h4>Breakdown of unresearched EVs per Model Year - Broked down by EV type</h4>
+            <p>This chart show the distribution of unresearched EVs per model year, broken down by type (Battery Electric Vehicles (BEV) and Plug-in Hybrid Electric Vehicle (PHEV)). Two things are obvious from this chart: all the cars that were unresearched are BEV cars, which are likely to have a high battery range and thus be eligible for CAFV and (2) newer cars are the ones that have not been researched.</p>
+            <div id="chart-cafv4"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
