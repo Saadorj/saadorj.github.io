@@ -41,7 +41,7 @@ function renderEVDistributionByCounty(data) {
         .attr("fill", d => {
           const countyName = d.properties.NAME; // Assuming the county name is in 'properties.NAME'
           const countyCount = data.filter(e => e.County === countyName).length;
-          return d3.interpolateBlues(countyCount / 1000); // Adjust denominator as needed for better color scaling
+          return d3.interpolateBlues(countyCount / 25000); // Adjust denominator as needed for better color scaling
         })
         .attr("stroke", "#333")
         .on("mouseover", function(event, d) {
