@@ -1,4 +1,4 @@
-import { colorFour } from '../constants/colors.js';
+import { colorSix } from '../constants/colors.js';
 
 function renderElectricRangeByCarMakerSortedByCount(data) {
     const margin = { top: 10, right: 30, bottom: 80, left: 60 },
@@ -79,7 +79,7 @@ function renderElectricRangeByCarMakerSortedByCount(data) {
       .attr("y", d => y(d.AvgRange))
       .attr("width", x.bandwidth())
       .attr("height", d => height - y(d.AvgRange))
-      .attr("fill", colorFour)
+      .attr("fill", colorSix)
       .attr("stroke", "black")
       .on("mouseover", function(event, d) {
         const bevPercentage = ((d.BEVCount / d.TotalCount) * 100).toFixed(2);
@@ -204,7 +204,7 @@ function renderElectricRangeByCarMakerSortedByCount(data) {
       .attr("y", d => y(d.AvgRange))
       .attr("width", x.bandwidth())
       .attr("height", d => height - y(d.AvgRange))
-      .attr("fill", colorFour)
+      .attr("fill", colorSix)
       .attr("stroke", "black")
       .on("mouseover", function(event, d) {
         const bevPercentage = ((d.BEVCount / d.TotalCount) * 100).toFixed(2);
