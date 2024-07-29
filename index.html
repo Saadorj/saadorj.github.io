@@ -123,7 +123,7 @@
     <div class="tab-content active" id="content-intro">
       <div class="row">
         <div class="col">
-          <h4>Distribution of Electric Vehicle Types (BEV, PHEV) in the State of Washington</h4>
+          <h4>Distribution of Electric Vehicle Types (BEV, PHEV) in the State of Washington (Tooltip Enabled)</h4>
           <div id="chart-intro1"></div>
           <div class="controls">
             <label for="countySelect">Select County (Limited to Top-5 Counties in terms of EV Count):</label>
@@ -139,11 +139,13 @@
       <div class="row">
         <div class="col">
           <h4>EV Distribution by County</h4>
+          <p>(Tooltip Enabled)</p>
           <p>The county map shows that more EV cars tend to be more populous, urban areas of the state (closer to the west coast), which makes sense.</p>
           <div id="chart-geo1"></div>
         </div>
         <div class="col">
           <h4>EV Distribution by City (Top 10 Cities)</h4>
+          <p>(Tooltip Enabled)</p>
           <div id="chart-geo2"></div>
         </div>
       </div>
@@ -155,10 +157,12 @@
       <div class="row">
         <div class="col">
           <h4>Electric Range by Car Maker: Top 15 Car Makers by Count</h4>
+          <p>(Tooltip Enabled)</p>
           <div id="chart-spec1"></div>
         </div>
         <div class="col">
           <h4>Electric Range by Car Maker: Top 15 Car Makers by Electric Range</h4>
+          <p>(Tooltip Enabled)</p>
           <div id="chart-spec2"></div>
         </div>
       </div>
@@ -170,20 +174,24 @@
       <div class="row">
         <div class="col">
           <h4>CAFV Eligibility by Bucketized Battery Electric Range</h4>
+          <p>(Tooltip Enabled)</p>
           <div id="chart-cafv1"></div>
         </div>
         <div class="col">
           <h4>CAFV Eligibility by Car Model Year</h4>
+          <p>(Tooltip Enabled)</p>
           <div id="chart-cafv2"></div>
         </div>
         <div class="row">
           <div class="col">
             <h4>Top Unresearched Car Makers in the dataset</h4>
+            <p>(Tooltip Enabled)</p>
             <p>These car makers have the highest number of vehicles in the dataset with that lack research, and thus were assigned the value 0 as a battery range. This chart shows that many of the unresearched cars are Teslas and other makers, which means the conclusions from the previous two charts should be taken with a grain of salt, since it indicates that many long-range cars in the dataset were assigned a value of 0!</p>
             <div id="chart-cafv3"></div>
           </div>
           <div class="col">
             <h4>Breakdown of unresearched EVs per Model Year - Broked down by EV type</h4>
+            <p>(Tooltip Enabled)</p>
             <p>This chart show the distribution of unresearched EVs per model year, broken down by type (Battery Electric Vehicles (BEV) and Plug-in Hybrid Electric Vehicle (PHEV)). Two things are obvious from this chart: all the cars that were unresearched are BEV cars, which are likely to have a high battery range and thus be eligible for CAFV and (2) newer cars are the ones that have not been researched.</p>
             <div id="chart-cafv4"></div>
           </div>
